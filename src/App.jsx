@@ -46,7 +46,9 @@ function getSaved(key, fallback) {
 }
 
 function Header({ page, go }) {
-  return <header className="site-header"><button className="brand" onClick={() => go('home')}><span>◈</span> CyberField</button><nav aria-label="Main navigation">{navItems.map(([id, label]) => <button className={page === id ? 'active' : ''} key={id} onClick={() => go(id)}>{label}</button>)}</nav></header>;
+  const [open, setOpen] = useState(false);
+  function navigate(id) { go(id); setOpen(false); }
+  return <header className="site-header mobile-nav"><button className="brand" onClick={() => navigate('home')}><span>◈</span> CyberField</button><button className="menu-toggle" aria-label={open ? 'Close navigation menu' : 'Open navigation menu'} aria-expanded={open} onClick={() => setOpen(current => !current)}><FontAwesomeIcon name={open ? 'fa-xmark' : 'fa-bars'} /></button><nav className={open ? 'open' : ''} aria-label="Main navigation">{navItems.map(([id, label]) => <button className={page === id ? 'active' : ''} key={id} onClick={() => navigate(id)}>{label}</button>)}</nav></header>;
 }
 
 function Home({ go }) {
